@@ -32,7 +32,6 @@ export class HideCommentUseCase {
     }
 
     async hideComment(type: HideBy, postId: string, comment: CommentEntity, keywords: KeywordEntity[], cookie: CookieEntity) {
-        console.log("🚀 ~ HideCommentUseCase ~ hideComment ~ cookie:", cookie)
         if (!cookie) {
             throw new HttpException(
                 `không tìm thấy cookie.`,
@@ -40,7 +39,6 @@ export class HideCommentUseCase {
             );
         }
         let isHide = this.checkHide(type, comment, keywords)
-        console.log("🚀 ~ HideCommentUseCase ~ hideComment ~ isHide:", isHide)
 
         if (isHide) {
             let res = null

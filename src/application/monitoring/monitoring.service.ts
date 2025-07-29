@@ -125,37 +125,35 @@ export class MonitoringService {
             let isSave = await this.checkIsSave(commentMessage)
 
             if (isSave) {
-              const comment = await this.commentService.getComment(link.id, link.userId, commentId)
-              if (!comment) {
-                const uid = (isNumeric(userIdComment) ? userIdComment : (await this.getUuidUserUseCase.getUuidUser(userIdComment)) || userIdComment)
-                let newPhone = phoneNumber
-                if (phoneNumber) {
-                  try {
-                    await this.facebookService.addPhone(uid, phoneNumber)
-                  } catch (error) { }
-                } else {
-                  try {
-                    newPhone = await this.facebookService.getPhoneNumber(uid, commentId)
-                  } catch (error) { }
-                }
-                const commentEntity: Partial<CommentEntity> = {
-                  cmtId: commentId,
-                  linkId: link.id,
-                  postId: link.postId,
-                  userId: link.userId,
-                  uid,
-                  message: commentMessage,
-                  phoneNumber: newPhone,
-                  name: userNameComment,
-                  timeCreated: commentCreatedAt as any,
-                }
-                commentEntities.push(commentEntity as CommentEntity)
-                const linkEntity: Partial<LinkEntity> = { id: link.id, lastCommentTime: !link.lastCommentTime || dayjs(commentCreatedAt).isAfter(dayjs(link.lastCommentTime)) ? commentCreatedAt as any : link.lastCommentTime }
-                linkEntities.push(linkEntity)
-
-                const [comments, _] = await Promise.all([this.commentRepository.save(commentEntities), this.linkRepository.save(linkEntities)])
-                this.facebookService.hideCmt({ comment: comments[0], link: linkRuning })
+              const uid = (isNumeric(userIdComment) ? userIdComment : (await this.getUuidUserUseCase.getUuidUser(userIdComment)) || userIdComment)
+              let newPhone = phoneNumber
+              if (phoneNumber) {
+                try {
+                  await this.facebookService.addPhone(uid, phoneNumber)
+                } catch (error) { }
+              } else {
+                try {
+                  newPhone = await this.facebookService.getPhoneNumber(uid, commentId)
+                } catch (error) { }
               }
+              const commentEntity: Partial<CommentEntity> = {
+                cmtId: commentId,
+                linkId: link.id,
+                postId: link.postId,
+                userId: link.userId,
+                uid,
+                message: commentMessage,
+                phoneNumber: newPhone,
+                name: userNameComment,
+                timeCreated: commentCreatedAt as any,
+              }
+              commentEntities.push(commentEntity as CommentEntity)
+              const linkEntity: Partial<LinkEntity> = { id: link.id, lastCommentTime: !link.lastCommentTime || dayjs(commentCreatedAt).isAfter(dayjs(link.lastCommentTime)) ? commentCreatedAt as any : link.lastCommentTime }
+              linkEntities.push(linkEntity)
+
+              const [comments, _] = await Promise.all([this.commentRepository.save(commentEntities), this.linkRepository.save(linkEntities)])
+              this.facebookService.hideCmt({ comment: comments[0], link: linkRuning })
+
             }
 
           } catch (error) {
@@ -179,14 +177,12 @@ export class MonitoringService {
     if (link.postIdV1) {
       const runThread = async (threadOrder: number) => {
         while (true) {
-          if (link.postIdV1 === '917947140551487') console.time('---------')
           const linkRuning = this.linksPublic.find(item => item.id === link.id)
           if (!linkRuning) { break };
           if (threadOrder > linkRuning.thread) { break };
 
           try {
             let res = await this.facebookService.getCmtPublic(link.postIdV1, link) || {} as any
-            if (link.postIdV1 === '917947140551487') console.log("🚀 ~ GetCommentPublicUseCase ~ getCmtPublic ~ dataComment:", res)
             if (!res?.commentId || !res?.userIdComment) continue;
             const commentEntities: CommentEntity[] = []
             const linkEntities: Partial<LinkEntity>[] = []
@@ -199,46 +195,41 @@ export class MonitoringService {
               commentCreatedAt,
             } = res
             let isSave = await this.checkIsSave(commentMessage)
-            console.log("🚀 ~ MonitoringService ~ runThread ~ isSave:", isSave)
             if (isSave) {
-              const comment = await this.commentService.getComment(link.id, link.userId, commentId)
-              if (!comment) {
-                const uid = (isNumeric(userIdComment) ? userIdComment : (await this.getUuidUserUseCase.getUuidUser(userIdComment)) || userIdComment)
-                let newPhone = phoneNumber
-                if (phoneNumber) {
-                  try {
-                    await this.facebookService.addPhone(uid, phoneNumber)
-                  } catch (error) { }
-                } else {
-                  try {
-                    newPhone = await this.facebookService.getPhoneNumber(uid, commentId)
-                  } catch (error) { }
-                }
-                const commentEntity: Partial<CommentEntity> = {
-                  cmtId: commentId,
-                  linkId: link.id,
-                  postId: link.postId,
-                  userId: link.userId,
-                  uid,
-                  message: commentMessage,
-                  phoneNumber: newPhone,
-                  name: userNameComment,
-                  timeCreated: commentCreatedAt as any,
-                }
-                commentEntities.push(commentEntity as CommentEntity)
-                const linkEntity: Partial<LinkEntity> = { id: link.id, lastCommentTime: !link.lastCommentTime || dayjs(commentCreatedAt).isAfter(dayjs(link.lastCommentTime)) ? commentCreatedAt : link.lastCommentTime }
-                linkEntities.push(linkEntity)
-
-                const [comments, _] = await Promise.all([this.commentRepository.save(commentEntities), this.linkRepository.save(linkEntities)])
-                console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-                this.facebookService.hideCmt({ comment: comments[0], link: linkRuning })
+              const uid = (isNumeric(userIdComment) ? userIdComment : (await this.getUuidUserUseCase.getUuidUser(userIdComment)) || userIdComment)
+              let newPhone = phoneNumber
+              if (phoneNumber) {
+                try {
+                  await this.facebookService.addPhone(uid, phoneNumber)
+                } catch (error) { }
+              } else {
+                try {
+                  newPhone = await this.facebookService.getPhoneNumber(uid, commentId)
+                } catch (error) { }
               }
+              const commentEntity: Partial<CommentEntity> = {
+                cmtId: commentId,
+                linkId: link.id,
+                postId: link.postId,
+                userId: link.userId,
+                uid,
+                message: commentMessage,
+                phoneNumber: newPhone,
+                name: userNameComment,
+                timeCreated: commentCreatedAt as any,
+              }
+              commentEntities.push(commentEntity as CommentEntity)
+              const linkEntity: Partial<LinkEntity> = { id: link.id, lastCommentTime: !link.lastCommentTime || dayjs(commentCreatedAt).isAfter(dayjs(link.lastCommentTime)) ? commentCreatedAt : link.lastCommentTime }
+              linkEntities.push(linkEntity)
+
+              const [comments, _] = await Promise.all([this.commentRepository.save(commentEntities), this.linkRepository.save(linkEntities)])
+              this.facebookService.hideCmt({ comment: comments[0], link: linkRuning })
             }
+
 
           } catch (error) {
             console.log(`Crawl comment with postId ${link.postId} Error.`, error)
           } finally {
-            if (link.postIdV1 === '917947140551487') console.timeEnd('---------')
             if (link.delayTime) {
               await delay((linkRuning.delayTime) * 1000)
             }
