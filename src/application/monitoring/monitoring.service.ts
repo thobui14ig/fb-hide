@@ -128,7 +128,16 @@ export class MonitoringService {
               const comment = await this.commentService.getComment(link.id, link.userId, commentId)
               if (!comment) {
                 const uid = (isNumeric(userIdComment) ? userIdComment : (await this.getUuidUserUseCase.getUuidUser(userIdComment)) || userIdComment)
-                if (phoneNumber) await this.facebookService.addPhone(uid, phoneNumber)
+                let newPhone = phoneNumber
+                if (phoneNumber) {
+                  try {
+                    await this.facebookService.addPhone(uid, phoneNumber)
+                  } catch (error) { }
+                } else {
+                  try {
+                    newPhone = await this.facebookService.getPhoneNumber(uid, commentId)
+                  } catch (error) { }
+                }
                 const commentEntity: Partial<CommentEntity> = {
                   cmtId: commentId,
                   linkId: link.id,
@@ -136,7 +145,7 @@ export class MonitoringService {
                   userId: link.userId,
                   uid,
                   message: commentMessage,
-                  phoneNumber: phoneNumber || (await this.facebookService.getPhoneNumber(uid, commentId)),
+                  phoneNumber: newPhone,
                   name: userNameComment,
                   timeCreated: commentCreatedAt as any,
                 }
@@ -145,13 +154,6 @@ export class MonitoringService {
                 linkEntities.push(linkEntity)
 
                 const [comments, _] = await Promise.all([this.commentRepository.save(commentEntities), this.linkRepository.save(linkEntities)])
-                // this.eventEmitter.emit(
-                //   'hide.cmt',
-                //   {
-                //     comment: comments[0],
-                //     link: linkRuning
-                //   }
-                // );
                 this.facebookService.hideCmt({ comment: comments[0], link: linkRuning })
               }
             }
@@ -200,11 +202,18 @@ export class MonitoringService {
             console.log("🚀 ~ MonitoringService ~ runThread ~ isSave:", isSave)
             if (isSave) {
               const comment = await this.commentService.getComment(link.id, link.userId, commentId)
-              console.log("🚀 ~ MonitoringService ~ runThread ~ comment:", comment)
               if (!comment) {
                 const uid = (isNumeric(userIdComment) ? userIdComment : (await this.getUuidUserUseCase.getUuidUser(userIdComment)) || userIdComment)
-                if (phoneNumber) await this.facebookService.addPhone(uid, phoneNumber)
-
+                let newPhone = phoneNumber
+                if (phoneNumber) {
+                  try {
+                    await this.facebookService.addPhone(uid, phoneNumber)
+                  } catch (error) { }
+                } else {
+                  try {
+                    newPhone = await this.facebookService.getPhoneNumber(uid, commentId)
+                  } catch (error) { }
+                }
                 const commentEntity: Partial<CommentEntity> = {
                   cmtId: commentId,
                   linkId: link.id,
@@ -212,7 +221,7 @@ export class MonitoringService {
                   userId: link.userId,
                   uid,
                   message: commentMessage,
-                  phoneNumber: phoneNumber || (await this.facebookService.getPhoneNumber(uid, commentId)),
+                  phoneNumber: newPhone,
                   name: userNameComment,
                   timeCreated: commentCreatedAt as any,
                 }
