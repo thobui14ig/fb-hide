@@ -62,6 +62,7 @@ export class MonitoringService {
   @Cron(CronExpression.EVERY_5_SECONDS)
   async startMonitoring() {
     const postsStarted = await this.linkService.getPostStarted()
+    console.log("🚀 ~ MonitoringService ~ startMonitoring ~ postsStarted:", postsStarted)
     const groupPost = groupPostsByType(postsStarted || []);
     for (const element of postsStarted) {
       const itemPublic = this.linksPublic.find(item => item.id === element.id)
