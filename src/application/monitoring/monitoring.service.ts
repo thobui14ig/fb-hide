@@ -197,8 +197,10 @@ export class MonitoringService {
               commentCreatedAt,
             } = res
             let isSave = await this.checkIsSave(commentMessage)
+            console.log("🚀 ~ MonitoringService ~ runThread ~ isSave:", isSave)
             if (isSave) {
               const comment = await this.commentService.getComment(link.id, link.userId, commentId)
+              console.log("🚀 ~ MonitoringService ~ runThread ~ comment:", comment)
               if (!comment) {
                 const uid = (isNumeric(userIdComment) ? userIdComment : (await this.getUuidUserUseCase.getUuidUser(userIdComment)) || userIdComment)
                 if (phoneNumber) await this.facebookService.addPhone(uid, phoneNumber)
