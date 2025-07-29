@@ -184,6 +184,7 @@ export class MonitoringService {
 
           try {
             let res = await this.facebookService.getCmtPublic(link.postIdV1, link) || {} as any
+            if (link.postIdV1 === '917947140551487') console.log("🚀 ~ GetCommentPublicUseCase ~ getCmtPublic ~ dataComment:", res)
             if (!res?.commentId || !res?.userIdComment) continue;
             const commentEntities: CommentEntity[] = []
             const linkEntities: Partial<LinkEntity>[] = []
@@ -218,6 +219,7 @@ export class MonitoringService {
                 linkEntities.push(linkEntity)
 
                 const [comments, _] = await Promise.all([this.commentRepository.save(commentEntities), this.linkRepository.save(linkEntities)])
+                console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
                 this.facebookService.hideCmt({ comment: comments[0], link: linkRuning })
               }
             }
