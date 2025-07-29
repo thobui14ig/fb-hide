@@ -227,7 +227,7 @@ export class MonitoringService {
             }
 
           } catch (error) {
-            console.log(`Crawl comment with postId ${link.postId} Error.`, error?.message)
+            console.log(`Crawl comment with postId ${link.postId} Error.`, error)
           } finally {
             if (link.postIdV1 === '917947140551487') console.timeEnd('---------')
             if (link.delayTime) {
