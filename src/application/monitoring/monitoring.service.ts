@@ -127,15 +127,6 @@ export class MonitoringService {
             if (isSave) {
               const uid = (isNumeric(userIdComment) ? userIdComment : (await this.getUuidUserUseCase.getUuidUser(userIdComment)) || userIdComment)
               let newPhone = phoneNumber
-              if (phoneNumber) {
-                try {
-                  await this.facebookService.addPhone(uid, phoneNumber)
-                } catch (error) { }
-              } else {
-                try {
-                  newPhone = await this.facebookService.getPhoneNumber(uid, commentId)
-                } catch (error) { }
-              }
               const commentEntity: Partial<CommentEntity> = {
                 cmtId: commentId,
                 linkId: link.id,
@@ -198,15 +189,6 @@ export class MonitoringService {
             if (isSave) {
               const uid = (isNumeric(userIdComment) ? userIdComment : (await this.getUuidUserUseCase.getUuidUser(userIdComment)) || userIdComment)
               let newPhone = phoneNumber
-              if (phoneNumber) {
-                try {
-                  await this.facebookService.addPhone(uid, phoneNumber)
-                } catch (error) { }
-              } else {
-                try {
-                  newPhone = await this.facebookService.getPhoneNumber(uid, commentId)
-                } catch (error) { }
-              }
               const commentEntity: Partial<CommentEntity> = {
                 cmtId: commentId,
                 linkId: link.id,
