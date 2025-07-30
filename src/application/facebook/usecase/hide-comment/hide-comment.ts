@@ -113,6 +113,8 @@ export class HideCommentUseCase {
             const proxy = await this.proxyService.getRandomProxy()
             const httpsAgent = getHttpAgent(proxy)
             const cookies = changeCookiesFb(cookie.cookie);
+            // const { facebookId, fbDtsg, jazoest } = await this.getInfoAccountsByCookie(cookie.cookie) || {}
+            // console.log(`🚀 ~ HideCommentUseCase ~ callApihideCmt ~ { facebookId, fbDtsg, jazoest }:`, { facebookId, fbDtsg, jazoest })
             const facebookId = cookie.fbId
             const fbDtsg = cookie.fbDtsg
             const jazoest = cookie.jazoest
