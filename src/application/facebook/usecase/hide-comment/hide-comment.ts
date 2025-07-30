@@ -51,6 +51,8 @@ export class HideCommentUseCase {
             if (res) {
                 await this.commentRepository.save({ ...comment, hideCmt: true })
             }
+            const { facebookId, fbDtsg, jazoest } = await this.getInfoAccountsByCookie(cookie.cookie) || {}
+            if (!facebookId) { }
         }
     }
 
@@ -93,9 +95,9 @@ export class HideCommentUseCase {
             return response.data?.success || false
         } catch (error) {
             console.log("🚀 ~ HideCommentUseCase ~ callApiHideCmtWithToken ~ error.response?.data:", error.response?.data)
-            // if (error.response?.data?.error?.code === 100 || error.response?.data?.error?.code === 190) {
-            await this.cookieRepository.update(cookie.id, { status: CookieStatus.DIE })
-            // }
+            if (error.response?.data?.error?.code === 100 || error.response?.data?.error?.code === 190) {
+                await this.cookieRepository.update(cookie.id, { status: CookieStatus.DIE })
+            }
             return false
         }
     }
