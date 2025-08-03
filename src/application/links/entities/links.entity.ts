@@ -10,6 +10,7 @@ import {
 import { UserEntity } from '../../user/entities/user.entity';
 import { CommentEntity } from 'src/application/comments/entities/comment.entity';
 import { KeywordEntity } from 'src/application/setting/entities/keyword';
+import { PageEntity } from 'src/application/page/entities/pages.entity';
 
 export enum LinkStatus {
   Pending = 'pending',
@@ -106,6 +107,9 @@ export class LinkEntity {
   @Column({ name: 'thread' })
   thread: number;
 
+  @Column({ name: 'table_page_id' })
+  tablePageId: number;
+
   @CreateDateColumn({
     type: 'datetime',
     name: 'created_at',
@@ -122,4 +126,8 @@ export class LinkEntity {
 
   @OneToMany(() => KeywordEntity, (keyword) => keyword.link)
   keywords: KeywordEntity[];
+
+  @ManyToOne(() => PageEntity, (user) => user.links)
+  @JoinColumn({ name: 'table_page_id' })
+  page: PageEntity;
 }

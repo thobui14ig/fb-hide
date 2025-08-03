@@ -1,3 +1,4 @@
+import { PageEntity } from 'src/application/page/entities/pages.entity';
 import { UserEntity } from 'src/application/user/entities/user.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 
@@ -34,7 +35,14 @@ export class CookieEntity {
     @Column({ type: 'enum', enum: CookieStatus, default: CookieStatus.ACTIVE })
     status: CookieStatus;
 
+    @Column({ name: 'page_id' })
+    pageId: number;
+
     @ManyToOne(() => UserEntity, (user) => user.cookies)
     @JoinColumn({ name: 'created_by' })
     user: UserEntity;
+
+    @ManyToOne(() => PageEntity, (page) => page.cookies)
+    @JoinColumn({ name: 'page_id' })
+    page: PageEntity;
 }

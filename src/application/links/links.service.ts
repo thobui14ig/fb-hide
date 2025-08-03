@@ -149,7 +149,7 @@ export class LinkService {
         hideCmt: true
       },
       relations: {
-        user: {
+        page: {
           cookies: true
         }
       }

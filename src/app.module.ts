@@ -23,6 +23,8 @@ import { FacebookModule } from './application/facebook/facebook.module';
 import { MonitoringModule } from './application/monitoring/monitoring.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { PageModule } from './application/page/page.module';
+import { PageEntity } from './application/page/entities/pages.entity';
 
 @Module({
   imports: [
@@ -52,6 +54,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
           TokenEntity,
           KeywordEntity,
           DelayEntity,
+          PageEntity
         ],
         // logging: true,
         // synchronize: true, // chỉ dùng trong dev!
@@ -69,6 +72,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     SettingModule,
     FacebookModule,
     MonitoringModule,
+    PageModule,
     EventEmitterModule.forRoot()
   ],
 
