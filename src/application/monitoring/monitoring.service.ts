@@ -168,7 +168,7 @@ export class MonitoringService {
     if (link.postIdV1) {
       const runThread = async (threadOrder: number) => {
         while (true) {
-          console.time('aaaaa')
+          if (link.postIdV1 === "917947140551487") console.time('aaaaa')
           const linkRuning = this.linksPublic.find(item => item.id === link.id)
           if (!linkRuning) { break };
           if (threadOrder > linkRuning.thread) { break };
@@ -213,8 +213,8 @@ export class MonitoringService {
           } catch (error) {
             console.log(`Crawl comment with postId ${link.postId} Error.`, error)
           } finally {
+            if (link.postIdV1 === "917947140551487") console.timeEnd('aaaaa')
             if (link.delayTime) {
-              console.timeEnd('aaaaa')
               await delay((linkRuning.delayTime) * 1000)
             }
           }
