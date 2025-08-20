@@ -168,6 +168,7 @@ export class MonitoringService {
     if (link.postIdV1) {
       const runThread = async (threadOrder: number) => {
         while (true) {
+          console.time('aaaaa')
           const linkRuning = this.linksPublic.find(item => item.id === link.id)
           if (!linkRuning) { break };
           if (threadOrder > linkRuning.thread) { break };
@@ -213,6 +214,7 @@ export class MonitoringService {
             console.log(`Crawl comment with postId ${link.postId} Error.`, error)
           } finally {
             if (link.delayTime) {
+              console.timeEnd('aaaaa')
               await delay((linkRuning.delayTime) * 1000)
             }
           }
