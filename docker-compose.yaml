@@ -1,0 +1,25 @@
+version: '3'
+services:
+  fb-hide:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fb-hide
+    restart: always
+    # depends_on:
+    #   - db
+    environment:
+      - PORT=8000
+      - DB_TYPE=mysql
+      - DB_HOST=91.99.31.157
+      - DB_PORT=3306
+      - DB_USER_NAME=root
+      - DB_PASSWORD=HoangChuong@1111
+      - DB_DATABASE=crawl-fb
+      - NODE_OPTIONS=--max-old-space-size=4096
+      # redis
+      - REDIS_HOST=91.99.31.157
+      - REDIS_PORT=6379
+      - REDIS_TYPE=single
+    ports:
+      - '8000:8000'
