@@ -110,6 +110,9 @@ export class LinkEntity {
   @Column({ name: 'table_page_id' })
   tablePageId: number;
 
+  @Column({ default: false, name: 'is_deleted' })
+  isDelete: Boolean;
+
   @CreateDateColumn({
     type: 'datetime',
     name: 'created_at',
