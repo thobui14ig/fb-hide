@@ -11,14 +11,14 @@ services:
     environment:
       - PORT=8000
       - DB_TYPE=mysql
-      - DB_HOST=91.98.138.98
+      - DB_HOST=46.62.205.241
       - DB_PORT=3306
       - DB_USER_NAME=root
-      - DB_PASSWORD=HoangChuong@1111
+      - DB_PASSWORD=MyRootPass123!
       - DB_DATABASE=crawl-fb
       - NODE_OPTIONS=--max-old-space-size=4096
       # redis
-      - REDIS_HOST=91.98.138.98
+      - REDIS_HOST=46.62.205.241
       - REDIS_PORT=6379
       - REDIS_TYPE=single
     ports:
