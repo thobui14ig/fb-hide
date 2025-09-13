@@ -9,7 +9,7 @@ services:
     # depends_on:
     #   - db
     environment:
-      - PORT=8000
+      - PORT=6000
       - DB_TYPE=mysql
       - DB_HOST=91.98.138.98
       - DB_PORT=3306
@@ -22,4 +22,4 @@ services:
       - REDIS_PORT=6379
       - REDIS_TYPE=single
     ports:
-      - '8000:8000'
+      - '6000:6000'
